@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Transaction } from './entities/transaction.entity';
@@ -24,9 +25,10 @@ export class TransactionsService {
   }
 
   async readjson() {
-    const res = await fs.readFile('./src/moneyOfUnit/budget.json');
-    const data =  await JSON.parse(res);
-    return data
+    const res = await fs.readFile('./src/moneyOfUnit/budget.json', 'utf-8');
+    const money = await JSON.parse(res);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return money;
   }
 
   checkPurchases(item: CreateTransactionDto, file) {
