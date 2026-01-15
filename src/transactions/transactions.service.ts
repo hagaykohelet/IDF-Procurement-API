@@ -32,8 +32,8 @@ export class TransactionsService {
   }
 
   checkPurchases(item: CreateTransactionDto, file) {
-    const cost = item.quantity * item.pricePerUnit;
-    if (cost > file) {
+    const coast = item.quantity * item.pricePerUnit;
+    if (coast > file) {
       return false;
     }
     return true;
@@ -48,13 +48,14 @@ export class TransactionsService {
       }
       if (check) {
         const data = await this.readjson();
-        
-        return data.count;
-        // const validateMoney = this.checkPurchases(item, data);
-        // if (validateMoney) {
-        //   return 'item added';
+        const validateMoney = this.checkPurchases(item, data.count);
+        if (validateMoney) {
+          data.count -= item.quantity * item.pricePerUnit;
+          return data.count;
+
         }
+
       }
     }
   }
-// }
+}
